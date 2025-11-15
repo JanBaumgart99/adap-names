@@ -5,53 +5,103 @@ export class StringArrayName implements Name {
 
     protected delimiter: string = DEFAULT_DELIMITER;
     protected components: string[] = [];
+    protected singleCharacterCheck(d: string): void {
+        if (d.length !== 1) {
+            throw new Error("The Delimiter must be exactly one character");
+        }
+    }
+
 
     constructor(source: string[], delimiter?: string) {
-        throw new Error("needs implementation or deletion");
+        // Falls ein Delimiter übergeben wird, wird er darauf geprüft dass er genau ein einzelnes Zeichen ist.
+        if (delimiter !== undefined) {
+            this.singleCharacterCheck(delimiter);
+            this.delimiter = delimiter;
+        }
+
+        // Kopieren des Array, sodass wir eine 'Defensive Copy' haben, damit wir nicht von späteren äußeren Änderungen betroffen sind.
+        this.components = source.slice();
     }
+
+
 
     public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation or deletion");
+        // Wenn keine Komponenten vorhanden sind, dann soll ein leerer String zurückgegeben werden.
+        if (this.components.length === 0) {
+            return "";
+        }
+
+        // Verbinde alle Komponenten mit dem (Übergebenen oder STandard.) Delimiter.
+        return this.components.join(delimiter);
     }
+
 
     public asDataString(): string {
-        throw new Error("needs implementation or deletion");
+        // Wenn keine Komponenten vorhanden sind, dann soll ein leerer String zurückgegeben werden.
+        if (this.components.length === 0) {
+            return "";
+        }
+
+        // Verbinden aller Komponenten mit dem Standard Delimiter
+        return this.components.join(DEFAULT_DELIMITER);
     }
+
 
     public getDelimiterCharacter(): string {
-        throw new Error("needs implementation or deletion");
+        // Zurückgeben der aktuellen gesetzten Delimiter
+        return this.delimiter;
     }
+
 
     public isEmpty(): boolean {
-        throw new Error("needs implementation or deletion");
+        // Boolen Abfrage ob Komponenten enthalten sind
+        return this.components.length === 0;
     }
+
 
     public getNoComponents(): number {
-        throw new Error("needs implementation or deletion");
+        // Anzahl der aktuellen Komponenten
+        return this.components.length;
     }
+
 
     public getComponent(i: number): string {
-        throw new Error("needs implementation or deletion");
+        // Rückgabe der Komponente an dem gefragten Index
+        return this.components[i];
     }
+
 
     public setComponent(i: number, c: string): void {
-        throw new Error("needs implementation or deletion");
+        // Ersetzen der Komponente an Index i durch c
+        this.components[i] = c;
     }
+
 
     public insert(i: number, c: string): void {
-        throw new Error("needs implementation or deletion");
+        /* Einfügen der neuen Komponente c am Index i 
+           und verschieben aller nachfolgenden Komponenten nach rechts */
+        this.components.splice(i, 0, c);
     }
+
 
     public append(c: string): void {
-        throw new Error("needs implementation or deletion");
+        // Hinten anhängen der Komponente c an die Komponentenliste
+        this.components.push(c);
     }
+
 
     public remove(i: number): void {
-        throw new Error("needs implementation or deletion");
+        // Entfernen der Komponente an Index i
+        this.components.splice(i, 1);
     }
 
+
+
     public concat(other: Name): void {
-        throw new Error("needs implementation or deletion");
+        // Hinzufügen aller Komponenten des anderen Namens an diesen Namen
+        for (let i = 0; i < other.getNoComponents(); i++) {
+            this.append(other.getComponent(i));
+        }
     }
 
 }

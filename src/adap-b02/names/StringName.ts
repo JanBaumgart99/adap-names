@@ -7,7 +7,8 @@ export class StringName implements Name {
     protected name: string = "";
     protected noComponents: number = 0;
 
-    protected assertSingleCharacter(d: string): void {
+    //Helper-Methode um sicherzustellen dass der Delimiter genau ein Zeichen lang ist.
+    protected assertSingleCharacterCheck(d: string): void {
         if (d.length !== 1) {
             throw new Error("The Delimiter must be exactly one character");
         }
@@ -17,7 +18,7 @@ export class StringName implements Name {
 
     constructor(source: string, delimiter?: string) {
         if (delimiter !== undefined) {
-            this.assertSingleCharacter(delimiter);
+            this.assertSingleCharacterCheck(delimiter);
             this.delimiter = delimiter;
         };
 

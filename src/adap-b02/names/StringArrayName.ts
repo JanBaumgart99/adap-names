@@ -5,7 +5,9 @@ export class StringArrayName implements Name {
 
     protected delimiter: string = DEFAULT_DELIMITER;
     protected components: string[] = [];
-    protected singleCharacterCheck(d: string): void {
+
+    //Helper-Methode um sicherzustellen dass der Delimiter genau ein Zeichen lang ist.
+    protected assertSingleCharacterCheck(d: string): void {
         if (d.length !== 1) {
             throw new Error("The Delimiter must be exactly one character");
         }
@@ -15,7 +17,7 @@ export class StringArrayName implements Name {
     constructor(source: string[], delimiter?: string) {
         // Falls ein Delimiter übergeben wird, wird er darauf geprüft dass er genau ein einzelnes Zeichen ist.
         if (delimiter !== undefined) {
-            this.singleCharacterCheck(delimiter);
+            this.assertSingleCharacterCheck(delimiter);
             this.delimiter = delimiter;
         }
 

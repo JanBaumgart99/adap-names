@@ -24,7 +24,6 @@ export abstract class AbstractName implements Name {
 
 
     public asString(delimiter: string = this.delimiter): string {
-        // Escape delimiter and escape character in components
         const escape = (s: string) =>
             s.replace(
                 new RegExp(`[${ESCAPE_CHARACTER}${delimiter}]`, "g"),
@@ -47,7 +46,6 @@ export abstract class AbstractName implements Name {
 
 
     public asDataString(): string {
-        // canonical, delimiter-independent representation
         return this.asString(DEFAULT_DELIMITER);
     }
 

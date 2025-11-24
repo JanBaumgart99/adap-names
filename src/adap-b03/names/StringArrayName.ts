@@ -11,6 +11,16 @@ export class StringArrayName extends AbstractName {
     }
 
     //
+    // ----- Helper Method  -----
+    //
+
+    protected assertIndex(i: number): void {
+        if (i < 0 || i >= this.getNoComponents()) {
+            throw new RangeError(`Index ${i} out of bounds`);
+        }
+    }
+
+    //
     // ----- Clone -----
     //
 
@@ -27,14 +37,17 @@ export class StringArrayName extends AbstractName {
     }
 
     public getComponent(i: number): string {
+        this.assertIndex(i);
         return this.components[i];
     }
 
     public setComponent(i: number, c: string): void {
+        this.assertIndex(i);
         this.components[i] = c;
     }
 
     public insert(i: number, c: string): void {
+        this.assertIndex(i);
         this.components.splice(i, 0, c);
     }
 
@@ -43,6 +56,7 @@ export class StringArrayName extends AbstractName {
     }
 
     public remove(i: number): void {
+        this.assertIndex(i);
         this.components.splice(i, 1);
     }
 }

@@ -14,6 +14,17 @@ export class StringName extends AbstractName {
     }
 
     //
+    // ----- Helper Methods-----
+    //
+
+    protected assertIndex(i: number): void {
+        if (i < 0 || i >= this.getNoComponents()) {
+            throw new RangeError(`Index ${i} out of bounds`);
+        }
+    }
+
+
+    //
     // ----- Clone -----
     //
 
@@ -30,17 +41,20 @@ export class StringName extends AbstractName {
     }
 
     public getComponent(i: number): string {
+        this.assertIndex(i);
         const comps = this.parseInternalName();
         return comps[i];
     }
 
     public setComponent(i: number, c: string): void {
+        this.assertIndex(i);
         const comps = this.parseInternalName();
         comps[i] = c;
         this.rebuildFromComponents(comps);
     }
 
     public insert(i: number, c: string): void {
+        this.assertIndex(i);
         const comps = this.parseInternalName();
         comps.splice(i, 0, c);
         this.rebuildFromComponents(comps);
@@ -53,13 +67,14 @@ export class StringName extends AbstractName {
     }
 
     public remove(i: number): void {
+        this.assertIndex(i);
         const comps = this.parseInternalName();
         comps.splice(i, 1);
         this.rebuildFromComponents(comps);
     }
 
     //
-    // ----- Private Helpers -----
+    // ----- Private Parsing / Rebuild Helpers -----
     //
 
     private parseInternalName(): string[] {
@@ -75,16 +90,15 @@ export class StringName extends AbstractName {
             const ch = this.name[i];
 
             if (ch === esc) {
-                // Take next char literally
+                // escape character → escape next character
                 if (i + 1 < this.name.length) {
                     cur += this.name[i + 1];
                     i++;
                 } else {
-                    // Trailing escape
                     cur += esc;
                 }
             } else if (ch === d) {
-                // Component boundary
+                // delimiter → new component
                 components.push(cur);
                 cur = "";
             } else {

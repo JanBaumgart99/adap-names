@@ -11,7 +11,7 @@ export abstract class AbstractName implements Name {
 
 
     //
-    // ----- Cloning (Subclasses must implement) -----
+    // ----- Cloning -----
     //
 
 

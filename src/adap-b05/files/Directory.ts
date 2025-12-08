@@ -17,7 +17,10 @@ export class Directory extends Node {
     }
 
     public removeChildNode(cn: Node): void {
-        this.childNodes.delete(cn); // Yikes! Should have been called remove
+        this.childNodes.delete(cn);
     }
 
+    public getChildNodes(): Iterable<Node> {
+        return this.childNodes;
+    }
 }

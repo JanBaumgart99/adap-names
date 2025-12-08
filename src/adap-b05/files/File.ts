@@ -1,12 +1,13 @@
 import { Node } from "./Node";
 import { Directory } from "./Directory";
+import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { MethodFailedException } from "../common/MethodFailedException";
 
 enum FileState {
     OPEN,
     CLOSED,
-    DELETED        
-};
+    DELETED
+}
 
 export class File extends Node {
 
@@ -17,21 +18,36 @@ export class File extends Node {
     }
 
     public open(): void {
-        // do something
+        IllegalArgumentException.assert(
+            this.state === FileState.CLOSED,
+            "File is already open or deleted"
+        );
+        this.state = FileState.OPEN;
+    }
+
+    public close(): void {
+        IllegalArgumentException.assert(
+            this.state === FileState.OPEN,
+            "File is not open"
+        );
+        this.state = FileState.CLOSED;
     }
 
     public read(noBytes: number): Int8Array {
-        let result: Int8Array = new Int8Array(noBytes);
-        // do something
+        IllegalArgumentException.assert(
+            this.state === FileState.OPEN,
+            "File must be open to read"
+        );
+        IllegalArgumentException.assert(noBytes >= 0, "invalid byte length");
 
-        let tries: number = 0;
-        for (let i: number = 0; i < noBytes; i++) {
+        const result = new Int8Array(noBytes);
+
+        for (let i = 0; i < noBytes; i++) {
             try {
                 result[i] = this.readNextByte();
-            } catch(ex) {
-                tries++;
+            } catch (ex) {
                 if (ex instanceof MethodFailedException) {
-                    // Oh no! What @todo?!
+                    // ignore single-byte failures
                 }
             }
         }
@@ -40,15 +56,6 @@ export class File extends Node {
     }
 
     protected readNextByte(): number {
-        return 0; // @todo
+        return 0;
     }
-
-    public close(): void {
-        // do something
-    }
-
-    protected doGetFileState(): FileState {
-        return this.state;
-    }
-
 }

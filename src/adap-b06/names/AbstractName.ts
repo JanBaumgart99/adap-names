@@ -16,7 +16,9 @@ export abstract class AbstractName implements Name {
         this.assertInvariant();
     }
 
-    // ---------------- CLONE ----------------
+
+
+    //  CLONE 
 
     public clone(): Name {
         return this.newInstance();
@@ -24,7 +26,9 @@ export abstract class AbstractName implements Name {
 
     protected abstract newInstance(): AbstractName;
 
-    // ---------------- STRING ----------------
+
+
+    //  STRING 
 
     public asString(delimiter: string = this.delimiter): string {
         IllegalArgumentException.assert(
@@ -51,7 +55,9 @@ export abstract class AbstractName implements Name {
         return parts.join(DEFAULT_DELIMITER);
     }
 
-    // ---------------- EQUALITY ----------------
+
+
+    //  EQUALITY 
 
     public isEqual(other: Name): boolean {
         if (other === this) return true;
@@ -76,7 +82,9 @@ export abstract class AbstractName implements Name {
         return hash;
     }
 
-    // ---------------- QUERIES ----------------
+
+
+    //  QUERIES 
 
     public isEmpty(): boolean {
         return this.getNoComponents() === 0;
@@ -86,7 +94,9 @@ export abstract class AbstractName implements Name {
         return this.delimiter;
     }
 
-    // ---------------- CONCAT ----------------
+
+
+    //  CONCAT 
 
     public concat(other: Name): Name {
         let result: Name = this.clone();
@@ -96,7 +106,9 @@ export abstract class AbstractName implements Name {
         return result;
     }
 
-    // ---------------- HELPERS ----------------
+
+
+    //  HELPERS 
 
     protected unmask(component: string): string {
         let res = "";
@@ -123,7 +135,9 @@ export abstract class AbstractName implements Name {
         );
     }
 
-    // ---------------- NARROW INTERFACE ----------------
+
+    
+    //  NARROW INTERFACE 
 
     public abstract getNoComponents(): number;
     public abstract getComponent(i: number): string;

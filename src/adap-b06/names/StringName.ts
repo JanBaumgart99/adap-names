@@ -21,13 +21,17 @@ export class StringName extends AbstractName {
         this.noComponents = this.parseComponents(source).length;
     }
 
-    // ---------- CLONE SUPPORT ----------
+
+
+    //  CLONE SUPPORT 
 
     protected newInstance(): StringName {
         return new StringName(this.name, this.delimiter);
     }
 
-    // ---------- PRIMITIVE OPERATIONS ----------
+
+
+    //  PRIMITIVE OPERATIONS 
 
     public getNoComponents(): number {
         return this.noComponents;
@@ -83,7 +87,9 @@ export class StringName extends AbstractName {
         return new StringName(comps.join(this.delimiter), this.delimiter);
     }
 
-    // ---------- HELPER ----------
+
+
+    //  HELPER 
 
     private parseComponents(value: string): string[] {
         if (value === "") return [];

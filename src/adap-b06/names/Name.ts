@@ -16,13 +16,10 @@ export interface Name extends Cloneable, Printable, Equality {
 
     getComponent(i: number): string;
 
-    /** Expects that new Name component c is properly masked */
     setComponent(i: number, c: string): Name;
 
-    /** Expects that new Name component c is properly masked */
     insert(i: number, c: string): Name;
 
-    /** Expects that new Name component c is properly masked */
     append(c: string): Name;
 
     remove(i: number): Name;

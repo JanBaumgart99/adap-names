@@ -15,17 +15,21 @@ export class StringArrayName extends AbstractName {
             "source array must not be null or undefined"
         );
 
-        // defensive copy (Value Object!)
+        // defensive copy
         this.components = [...source];
     }
 
-    // -------- CLONE SUPPORT --------
+
+
+    //  CLONE SUPPORT 
 
     protected newInstance(): StringArrayName {
         return new StringArrayName([...this.components], this.delimiter);
     }
 
-    // -------- PRIMITIVE OPERATIONS --------
+
+
+    //  PRIMITIVE OPERATIONS 
 
     public getNoComponents(): number {
         return this.components.length;
